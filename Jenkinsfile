@@ -71,7 +71,7 @@ pipeline {
             post{
                 success {
                     // Guardar el artefacto (resultante del empaquetado)
-                    sh "mvn archiveArtifacts artifacts: '*.jar', followSymlinks: false"
+                    archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
                     
                     
                 }
