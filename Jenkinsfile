@@ -38,7 +38,7 @@ pipeline {
                             post{
                                 always {
                                     // Guardar el informe de pruebas <- 
-                                    junit testResults: "target/surefire-reports/*-xml"
+                                    junit testResults: "target/surefire-reports/*.xml"
                                 }    
                             }
                         }
