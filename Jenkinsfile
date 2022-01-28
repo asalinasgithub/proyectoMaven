@@ -4,7 +4,9 @@ pipeline {
     
     stages {
         stage("Compilación") {
-            sh "mvn compile"
+            steps {
+                sh "mvn compile"
+            }
             
         }
         stage("Pruebas") {
@@ -44,16 +46,18 @@ pipeline {
                 }
                 stage("SonarQube") {
                     // Sonarqube
-                    withSonarQubeEnv('sonarqube'){ 
-                        sh """
-                        mvn sonar:sonar \
-                            -Dsonar.projectKey=proyectoMaven \
-                            -Dsonar.host.url=http://172.31.11.22:8081 \
-                            -Dsonar.login=e0d05b1445cc1113e967f7da44a7c3861d0cd60e
-                        """
-                    }
-                    timeout(time: 10, unit: "MINUTES"){
-                        waitForQualityGate abortPipeline: true    
+                    steps {
+                        withSonarQubeEnv('sonarqube'){ 
+                            sh """
+                            mvn sonar:sonar \
+                                -Dsonar.projectKey=proyectoMaven \
+                                -Dsonar.host.url=http://172.31.11.22:8081 \
+                                -Dsonar.login=e0d05b1445cc1113e967f7da44a7c3861d0cd60e
+                            """
+                        }
+                        timeout(time: 10, unit: "MINUTES"){
+                            waitForQualityGate abortPipeline: true    
+                        }
                     }
                     
                 }
